@@ -1,8 +1,7 @@
-set rnu nu
+set rnu
+set nu
 syntax on
 filetype on
-set cursorcolumn
-set cursorline
 set tabstop=4
 set nowrap
 set incsearch
