@@ -1,12 +1,16 @@
-set rnu
 set nu
 syntax on
 filetype on
 set tabstop=4
+set shiftwidth=4
+set expandtab
 set nowrap
 set incsearch
 set smartcase
 set showmode
 set showmatch
 set hlsearch
-
+set autoindent
+set ruler
+set laststatus=2
+colorscheme monokai
