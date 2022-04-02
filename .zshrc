@@ -18,3 +18,16 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Aliases
+# Files
+alias la="ls -A"
+alias rd="rm -fdr"
+# Git
+alias gdw="git pull"
+alias gup="git push"
+alias gi="git init"
+alias gc="git commit -m"
+alias gs="git status"
+alias ga="git add"
+alias gaa="git add -A"
