@@ -19,7 +19,7 @@ theme.font              = "NotoSansMono Regular 10"
 theme.notification_font = "NotoSansMono Bold 14"
 
 theme.bg_normal     = "#222222"
-theme.bg_focus      = "#333333"
+theme.bg_focus      = "#6495ed"
 theme.bg_urgent     = "#000000"
 theme.bg_minimize   = "#101010"
 theme.bg_systray    = theme.bg_normal
@@ -29,9 +29,11 @@ theme.fg_focus    = "#ffffff"
 theme.fg_urgent   = "#ff0000"
 theme.fg_minimize = "#ffffff"
 
-theme.border_width  = 5
+beautiful.useless_gap = 5
+
+theme.border_width  = 2
 theme.border_normal = "#00000000"
-theme.border_focus  = "#cecece33"
+theme.border_focus  = "#6495ed33"
 theme.border_marked = "#16A085"
 
 theme.hotkeys_modifiers_fg = "#2EB398"
@@ -45,6 +47,7 @@ theme.hotkeys_modifiers_fg = "#2EB398"
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
+theme.tooltip_opacity = 255
 
 -- Display the taglist squares
 theme.taglist_squares_sel   = themes_path .. "vader/taglist/squarefw.png"
