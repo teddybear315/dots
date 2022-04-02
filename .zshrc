@@ -21,7 +21,8 @@ fi
 
 # Aliases
 # Files
-alias la="ls -A"
+alias ls="ls --color=auto"
+alias la="ls -A --color=auto"
 alias rd="rm -fdr"
 # Git
 alias gdw="git pull"
