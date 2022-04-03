@@ -16,9 +16,12 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # Aliases
 # Files
+alias ..="cd .."
 alias ls="ls --color=auto"
 alias la="ls -A --color=auto"
 alias rd="rm -fdr"
+alias nv="nvim"
+alias v="vim"
 # Git
 alias gdw="git pull"
 alias gup="git push"
