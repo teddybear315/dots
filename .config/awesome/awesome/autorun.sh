@@ -29,7 +29,10 @@ run xfsettingsd
 run nm-applet
 run light-locker
 run picom --config /etc/xdg/picom.conf
-run thunar --daemon
+run xcape -e 'Super_L=Super_L|Control_L|Escape'
+#run thunar --daemon
+run pa-applet
 run pamac-tray
 # blueman-applet and msm_notifier are not installed in minimal edition
+run blueman-applet
 run msm_notifier

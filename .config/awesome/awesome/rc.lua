@@ -14,7 +14,6 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 local lain = require("lain")
 -- Freedesktop menu
 local freedesktop = require("freedesktop")
-local vicious = require("vicious")
 -- Enable VIM help for hotkeys widget when client with matching name is opened:
 -- require("awful.hotkeys_popup.keys.vim")
 -- {{{ Error handling
@@ -44,15 +43,14 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/themes/vader/theme.lua")
+beautiful.init(awful.util.getdir("config") .. "/themes/vader/theme.lua")
 beautiful.notification_font = "Noto Sans Regular 14"
-beautiful.useless_gap = 5
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
 browser = "opera"
-filemanager = "thunar"
-editor = "nv"
+filemanager = "ranger"
+editor = "vim"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -136,7 +134,19 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
+-- Keyboard map indicator and switcher
+mykeyboardlayout = awful.widget.keyboardlayout()
+
+-- {{{ Wibar
+-- Create a textclock widget
+mytextclock = wibox.widget.textclock("%H:%M ")
+
 markup      = lain.util.markup
+darkblue    = theme.bg_focus
+blue        = "#9EBABA"
+red         = "#EB8F8F"
+seperator = wibox.widget.textbox(' <span color="' .. blue .. '">| </span>')
+spacer = wibox.widget.textbox(' <span color="' .. blue .. '"> </span>')
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -156,7 +166,6 @@ local taglist_buttons = gears.table.join(
                     awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
                 )
 
-theme.menu_width  = 200
 local tasklist_buttons = gears.table.join(
                      awful.button({ }, 1, function (c)
                                               if c == client.focus then
@@ -197,57 +206,13 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
---{{---| Chat widget |------------------------------------------------------------------------------
-
-chaticon = wibox.widget.imagebox(beautiful.widget_chat, false)
-chaticon:buttons(awful.util.table.join(awful.button({ }, 1,
-function () awful.util.spawn_with_shell(chat) end)))
-
---{{---| Mail widget |------------------------------------------------------------------------------
-
-mailicon = wibox.widget.imagebox(beautiful.widget_mail, false)
-mailicon:buttons(awful.util.table.join(awful.button({ }, 1, 
-function () awful.util.spawn_with_shell(mailmutt) end)))
-
---{{---| Music widget |-----------------------------------------------------------------------------
-
-music = wibox.widget.imagebox(beautiful.widget_music, false)
-music:buttons(awful.util.table.join(
-  awful.button({ }, 1, function () awful.util.spawn_with_shell("spotify") end),
-  awful.button({ modkey }, 1, function () awful.util.spawn_with_shell("ncmpcpp toggle") end),
-  awful.button({ }, 3, function () couth.notifier:notify( couth.alsa:setVolume('Master','toggle')) end),
-  awful.button({ }, 4, function () couth.notifier:notify( couth.alsa:setVolume('PCM','2dB+')) end),
-  awful.button({ }, 5, function () couth.notifier:notify( couth.alsa:setVolume('PCM','2dB-')) end),
-  awful.button({ }, 4, function () couth.notifier:notify( couth.alsa:setVolume('Master','2dB+')) end),
-  awful.button({ }, 5, function () couth.notifier:notify( couth.alsa:setVolume('Master','2dB-')) end)))
-
---{{---| Mem Widget |-------------------------------------------------------------------------------
-
-memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, '<span background="#777E76"> <span color="#EEEEEE" background="#777E76">$2 MB </span></span>', 13)
-memicon = wibox.widget.imagebox(beautiful.widget_mem, false)
-
---{{---| Net widget |-------------------------------------------------------------------------------
-
-netwidget = wibox.widget.textbox()
-vicious.register(netwidget, 
-vicious.widgets.net,
-'<span background="#C2C2A4"> <span color="#FFFFFF">${enp5s0 down_kb} ↓↑ ${enp5s0 up_kb}</span> </span>', 3)
-neticon = wibox.widget.imagebox(beautiful.widget_net, false)
-netwidget:buttons(awful.util.table.join(awful.button({ }, 1,
-function () awful.util.spawn_with_shell(iptraf) end)))
-
---{{---| Separators widgets |-----------------------------------------------------------------------
-
-arr1 = wibox.widget.textbox(beautiful.arr2)
-clock = wibox.widget.textclock('<span background="#ec008c"> %H:%M </span>')
-
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6" }, s, awful.layout.layouts[1])
+
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
@@ -265,25 +230,29 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height=20 })
+    s.mywibox = awful.wibar({ position = "top", screen = s })
 
+    -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
-        { mylauncher, s.mylayoutbox, s.mytaglist, s.mypromptbox, layout = wibox.layout.fixed.horizontal },
-        s.mytasklist,
-        {
-            netwidget,
-            neticon,
-            memwidget,
-            memicon,
-            music,
-            mailicon, 
-            arr1,
-            clock,
-            layout = wibox.layout.fixed.horizontal
-        }
- }
- end)
+        { -- Left widgets
+            layout = wibox.layout.fixed.horizontal,
+            mylauncher,
+            s.mytaglist,
+            s.mypromptbox,
+            seperator,
+        },
+        s.mytasklist, -- Middle widget
+        { -- Right widgets
+                    layout = wibox.layout.fixed.horizontal,
+                    wibox.widget.systray(),
+                    mykeyboardlayout,
+                    seperator,
+                    mytextclock,
+                    s.mylayoutbox,
+                },
+    }
+end)
 -- }}}
 
 -- {{{ Mouse bindings
@@ -363,7 +332,7 @@ globalkeys = gears.table.join(
               {description = "decrease the number of columns", group = "layout"}),
     awful.key({ modkey, Shift     }, "b", function () awful.spawn("/usr/bin/chromium")          end,
               {description = "launch Browser", group = "launcher"}),
-    awful.key({ modkey            }, "space", function () awful.spawn("/usr/bin/rofi -show drun -modi drun") end,
+    awful.key({ modkey, "Control"}, "Escape", function () awful.spawn("/usr/bin/rofi -show drun -modi drun") end,
               {description = "launch rofi", group = "launcher"}),
     awful.key({ modkey,           }, "e", function () awful.spawn("/usr/bin/thunar")            end,
               {description = "launch filemanager", group = "launcher"}),
@@ -388,6 +357,8 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
+    awful.key({ modkey },            "space",     function () awful.spawn("dmenu_run -i -sb '#f80'") end,
+              {description = "run dmenu", group = "launcher"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
@@ -543,7 +514,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" } },
-      properties = { titlebars_enabled = false }
+      properties = { titlebars_enabled = true }
     },
 	
     -- Set Firefox to always map on the tag named "2" on screen 1.
