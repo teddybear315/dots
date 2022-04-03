@@ -211,20 +211,12 @@ function () awful.util.spawn_with_shell(mailmutt) end)))
 
 --{{---| Music widget |-----------------------------------------------------------------------------
 
-music = wibox.widget.imagebox(beautiful.widget_music, false)
-music:buttons(awful.util.table.join(
-  awful.button({ }, 1, function () awful.util.spawn_with_shell("spotify") end),
-  awful.button({ modkey }, 1, function () awful.util.spawn_with_shell("ncmpcpp toggle") end),
-  awful.button({ }, 3, function () couth.notifier:notify( couth.alsa:setVolume('Master','toggle')) end),
-  awful.button({ }, 4, function () couth.notifier:notify( couth.alsa:setVolume('PCM','2dB+')) end),
-  awful.button({ }, 5, function () couth.notifier:notify( couth.alsa:setVolume('PCM','2dB-')) end),
-  awful.button({ }, 4, function () couth.notifier:notify( couth.alsa:setVolume('Master','2dB+')) end),
-  awful.button({ }, 5, function () couth.notifier:notify( couth.alsa:setVolume('Master','2dB-')) end)))
+local spotify_widget = require("spotify")
 
 --{{---| Mem Widget |-------------------------------------------------------------------------------
 
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, '<span background="#777E76"> <span color="#EEEEEE" background="#777E76">$2 MB </span></span>', 13)
+vicious.register(memwidget, vicious.widgets.mem, '<span background="#FCBF49"> <span color="#333333" background="#FCBF49">$2 MB </span></span>', 13)
 memicon = wibox.widget.imagebox(beautiful.widget_mem, false)
 
 --{{---| Net widget |-------------------------------------------------------------------------------
@@ -232,7 +224,7 @@ memicon = wibox.widget.imagebox(beautiful.widget_mem, false)
 netwidget = wibox.widget.textbox()
 vicious.register(netwidget, 
 vicious.widgets.net,
-'<span background="#C2C2A4"> <span color="#FFFFFF">${enp5s0 down_kb} ↓↑ ${enp5s0 up_kb}</span> </span>', 3)
+'<span background="#F77F00"> ${enp5s0 down_kb} ↓↑ ${enp5s0 up_kb} </span>', 3)
 neticon = wibox.widget.imagebox(beautiful.widget_net, false)
 netwidget:buttons(awful.util.table.join(awful.button({ }, 1,
 function () awful.util.spawn_with_shell(iptraf) end)))
@@ -240,7 +232,7 @@ function () awful.util.spawn_with_shell(iptraf) end)))
 --{{---| Separators widgets |-----------------------------------------------------------------------
 
 arr1 = wibox.widget.textbox(beautiful.arr2)
-clock = wibox.widget.textclock('<span background="#ec008c"> %H:%M </span>')
+clock = wibox.widget.textclock('<span background="#EAE2B7" color="#333333"> %H:%M </span>')
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -272,13 +264,13 @@ awful.screen.connect_for_each_screen(function(s)
         { mylauncher, s.mylayoutbox, s.mytaglist, s.mypromptbox, layout = wibox.layout.fixed.horizontal },
         s.mytasklist,
         {
+            spotify_widget({
+                play_icon = 'Playing',
+                pause_icon = 'Play'
+            }),
             netwidget,
             neticon,
             memwidget,
-            memicon,
-            music,
-            mailicon, 
-            arr1,
             clock,
             layout = wibox.layout.fixed.horizontal
         }
