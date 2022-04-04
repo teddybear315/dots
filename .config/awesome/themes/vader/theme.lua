@@ -15,7 +15,7 @@ local themes_path = "~/.config/awesome/themes/vader"
 theme = {}
 theme.dir = "~/.config/awesome/themes/vader"
 
-theme.font              = "NotoSansMono Nerd Font Regular 10"
+theme.font              = "NotoSansMono Regular 10"
 theme.notification_font = "Noto Sans Regular 14"
 
 theme.bg_normal     = "#222222"
