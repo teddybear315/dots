@@ -197,6 +197,19 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+local palette = {
+    "#9B2226",
+    "#AE2012",
+    "#BB3E03",
+    "#CA6702",
+    "#EE9B00",
+    "#E9D8C6",
+    "#94D2BD",
+    "#3A9396",
+    "#335F73",
+    "#333333",
+}
+
 --{{---| Chat widget |------------------------------------------------------------------------------
 
 chaticon = wibox.widget.imagebox(beautiful.widget_chat, false)
@@ -213,10 +226,14 @@ function () awful.util.spawn_with_shell(mailmutt) end)))
 
 local spotify_widget = require("spotify")
 
+--{{---| CPU Widget |-------------------------------------------------------------------------------
+
+local cpu_widget = require("cpu")
+
 --{{---| Mem Widget |-------------------------------------------------------------------------------
 
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, '<span background="#FCBF49"> <span color="#333333" background="#FCBF49">$2 MB </span></span>', 13)
+vicious.register(memwidget, vicious.widgets.mem, '<span background="'..palette[2]..'" color="#eeeeee"> $2 MB </span>', 13)
 memicon = wibox.widget.imagebox(beautiful.widget_mem, false)
 
 --{{---| Net widget |-------------------------------------------------------------------------------
@@ -224,7 +241,7 @@ memicon = wibox.widget.imagebox(beautiful.widget_mem, false)
 netwidget = wibox.widget.textbox()
 vicious.register(netwidget, 
 vicious.widgets.net,
-'<span background="#F77F00"> ${enp5s0 down_kb} ↓↑ ${enp5s0 up_kb} </span>', 3)
+'<span background="'..palette[3]..'"> ${enp5s0 down_kb} ↓↑ ${enp5s0 up_kb} </span>', 3)
 neticon = wibox.widget.imagebox(beautiful.widget_net, false)
 netwidget:buttons(awful.util.table.join(awful.button({ }, 1,
 function () awful.util.spawn_with_shell(iptraf) end)))
@@ -232,7 +249,7 @@ function () awful.util.spawn_with_shell(iptraf) end)))
 --{{---| Separators widgets |-----------------------------------------------------------------------
 
 arr1 = wibox.widget.textbox(beautiful.arr2)
-clock = wibox.widget.textclock('<span background="#EAE2B7" color="#333333"> %H:%M </span>')
+clock = wibox.widget.textclock('<span background="'..palette[1]..'" color="#eeeeee"> %H:%M </span>')
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -261,12 +278,17 @@ awful.screen.connect_for_each_screen(function(s)
 
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
+        bg = "#333333ff",
         { mylauncher, s.mylayoutbox, s.mytaglist, s.mypromptbox, layout = wibox.layout.fixed.horizontal },
         s.mytasklist,
         {
             spotify_widget({
                 play_icon = 'Playing',
-                pause_icon = 'Play'
+                pause_icon = 'Play',
+                color = palette[5]
+            }),
+            cpu_widget({
+                color=palette[4]
             }),
             netwidget,
             neticon,
@@ -274,7 +296,7 @@ awful.screen.connect_for_each_screen(function(s)
             clock,
             layout = wibox.layout.fixed.horizontal
         }
- }
+    }
  end)
 -- }}}
 

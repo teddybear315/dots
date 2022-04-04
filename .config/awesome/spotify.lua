@@ -23,7 +23,7 @@ local function ellipsize(text, length)
     return (utf8.len(text) > length and length > 0)
         and text:sub(0, utf8.offset(text, length - 2) - 1) .. '...'
         or text
-end
+end 
 
 local spotify_widget = {}
 
@@ -33,10 +33,10 @@ local function worker(user_args)
 
     local play_icon = args.play_icon or 'Playing'
     local pause_icon = args.pause_icon or 'Play'
-    local font = args.font or 'NotoSansMono 9'
+    local font = args.font or 'NotoSansMono 10'
     local dim_when_paused = args.dim_when_paused == nil and false or args.dim_when_paused
     local dim_opacity = args.dim_opacity or 0.2
-    local max_length = args.max_length or 15
+    local max_length = args.max_length or 32
     local show_tooltip = args.show_tooltip == nil and true or args.show_tooltip
     local timeout = args.timeout or 1
 
@@ -44,7 +44,7 @@ local function worker(user_args)
     local cur_title = ''
     local cur_album = ''
     
-    local bg1 = '<span background="#D62828">'
+    local bg1 = '<span background="'..args.color..'">'
     local bg2 = '</span>'
     local curIcon = play_icon
     spotify_widget = wibox.widget {
@@ -106,7 +106,7 @@ local function worker(user_args)
         end
     end
 
-    watch(GET_SPOTIFY_STATUS_CMD, timeout, update_widget_icon, spotify_widget)
+    watch(GET_SPOTIFY_STATUS_CMD, timeout, updage_widget_icon, spotify_widget)
     watch(GET_CURRENT_SONG_CMD, timeout, update_widget_text, spotify_widget)
 
     --- Adds mouse controls to the widget:
