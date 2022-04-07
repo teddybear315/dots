@@ -20,8 +20,10 @@ alias ..="cd .."
 alias ls="exa -lFTL1"
 alias la="exa -lFTAL1"
 alias rd="rm -fdr"
+# General
 alias nv="nvim"
 alias v="vim"
+alias q="exit"
 # Git
 alias gdw="git pull"
 alias gup="git push"
