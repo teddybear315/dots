@@ -24,6 +24,7 @@ alias rd="rm -fdr"
 alias nv="nvim"
 alias v="vim"
 alias q="exit"
+alias ght="echo \"\$GH_TOKEN\" | xclip"
 # Git
 alias gdw="git pull"
 alias gup="git push"
