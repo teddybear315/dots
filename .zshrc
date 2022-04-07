@@ -18,7 +18,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # Files
 alias ..="cd .."
 alias ls="exa -lFTL1"
-alias la="exa -lFTAL1"
+alias la="exa -lFTaL1"
 alias rd="rm -fdr"
 # General
 alias nv="nvim"
@@ -32,3 +32,8 @@ alias gc="git commit -m"
 alias gs="git status"
 alias ga="git add"
 alias gaa="git add -A"
+# Pacman
+alias pmi="sudo pacman -S"
+alias pmr="sudo pacman -R"
+alias pmu="sudo pacman -U"
+alias pmuu="sudo pacman-Syyu"
