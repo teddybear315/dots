@@ -17,8 +17,8 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # Aliases
 # Files
 alias ..="cd .."
-alias ls="ls --color=auto"
-alias la="ls -A --color=auto"
+alias ls="exa -lFTL1"
+alias la="exa -lFTAL1"
 alias rd="rm -fdr"
 alias nv="nvim"
 alias v="vim"
