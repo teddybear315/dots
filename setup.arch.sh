@@ -1,5 +1,5 @@
 sudo pacman -Syyu
-sudo pacman -S awesome compton rofi alacritty wl-clipboard curl neovim exa opera python3
+sudo pacman -S awesome compton rofi github-cli alacritty wl-clipboard curl neovim exa opera python3
 sudo pacman -S zsh zsh-autosuggestions zsh-theme-powerlevel10k
 
 git clone https://aur.archlinux.org/yay.git
@@ -19,5 +19,7 @@ cp /etc/xdg/awesome/rc.lua ~/.config/awesome/rc.lua
 
 chsh -s $(which zsh)
 p10k configure
+
+gh auth login
 
 startx
