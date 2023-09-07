@@ -1,5 +1,6 @@
 sudo apt-get update
 sudo apt install nvim
+sudo apt install exa
 sudo apt install zsh
 cp .zshrc ~
 cp .p10k.zsh ~
