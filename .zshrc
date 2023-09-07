@@ -16,6 +16,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # Aliases
 # Files
+alias ~="cd ~"
 alias ..="cd .."
 alias ls="exa -lFTL1"
 alias la="exa -lFTaL1"
