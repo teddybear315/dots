@@ -23,5 +23,5 @@ cp /etc/xdg/awesome/rc.lua ~/.config/awesome/rc.lua
 #p10k configure
 
 #gh auth login
-
+#cd ~
 #startx

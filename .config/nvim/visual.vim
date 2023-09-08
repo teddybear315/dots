@@ -10,14 +10,14 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'navarasu/onedark.nvim'
 
 Plug 'tomasr/molokai'
-#Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
+Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
 
 Plug 'ap/vim-css-color'
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
-:PlugInstall
+:PlugInstall:q
 :PlugInstall --sync:q
 
 let g:rehash256 = 1

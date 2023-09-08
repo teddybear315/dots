@@ -18,7 +18,7 @@ vim.opt.colorcolumn = "80"
 vim.opt.mouse = "a"
 
 vim.keymap.set('n', '<Leader>f', ':NERDTreeFocus<CR>')
-vim.keymap.set('n', '<Leader>n', ':NERDTreeFind<CR>')
+vim.keymap.set('n', '<Leader>n', ':NERDTreeToggle<CR>')
 vim.keymap.set({'n','v'}, '<Leader>d', [["_d]])
 vim.keymap.set({'n','v'}, '<Leader>D', [["_D]])
 vim.keymap.set({'n','v'}, '<Leader>p', [["+p]])
