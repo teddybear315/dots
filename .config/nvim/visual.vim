@@ -7,13 +7,18 @@ Plug 'tc50cal/vim-terminal'
 Plug 'tpope/vim-commentary'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'navarasu/onedark.nvim'
+Plug 'tomasr/molokai'
 Plug 'ap/vim-css-color'
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
-let g:onedark_config = { 'style': 'warmer', }
-colorscheme onedark
+:PlugInstall --sync:q
+
+let g:rehash256 = 1
+let g:molokai_original =1
+"let g:onedark_config = { 'style': 'warmer', }
+colorscheme molokai
 
 hi ColorColumn guibg=#212124
 hi CursorLineNr guibg=#2c2d31
