@@ -18,25 +18,9 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # Files
 alias ~="cd ~"
 alias ..="cd .."
-alias ls="exa -lFTL1"
-alias la="exa -lFTaL1"
 alias rd="rm -fdr"
 # General
 alias nv="nvim"
 alias v="vim"
 alias q="exit"
 alias ght="echo \"\$GH_TOKEN\" | xclip"
-# Git
-alias gdw="git pull"
-alias gup="git push"
-alias gi="git init"
-alias gc="git commit -m"
-alias gS="git status"
-alias gs="git stage"
-alias gsa="git stage -A"
-alias gd="git diff"
-# Pacman
-alias pmi="sudo pacman -S"
-alias pmr="sudo pacman -R"
-alias pmu="sudo pacman -U"
-alias pmuu="sudo pacman -Syyu"
